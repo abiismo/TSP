@@ -1,6 +1,6 @@
 # Buscador del catálogo de perfumes
 
-Prototipo académico en Python. Incluye búsqueda básica por nombre y búsqueda avanzada por marca, género, familia olfativa, rango de precio, presentación y disponibilidad.
+Prototipo en Python. Incluye búsqueda básica por nombre y búsqueda avanzada por marca, género, familia olfativa, rango de precio, presentación y disponibilidad.
 
 ## Ejecutar localmente
 

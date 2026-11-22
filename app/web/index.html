@@ -6,14 +6,21 @@
   <meta name="theme-color" content="#f4f1e9">
   <title>Catálogo de perfumes</title>
   <link rel="stylesheet" href="/static/catalog.css">
+  <link rel="stylesheet" href="/static/auth.css">
   <script defer src="/static/catalog.js"></script>
+  <script defer src="/static/auth.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#collection">Ir al catálogo</a>
   <header class="site-header wrap">
     <a class="brand" href="/" aria-label="Catálogo de perfumes, inicio"><span class="brand-mark" aria-hidden="true">p.</span><span>perfumes<span class="brand-caption">CATÁLOGO VIRTUAL</span></span></a>
-    <a class="collection-link" href="#collection">Explorar colección <span aria-hidden="true">↗</span></a>
+    <nav class="header-actions" aria-label="Navegación principal">
+      <a class="collection-link" href="#collection">Explorar colección <span aria-hidden="true">↗</span></a>
+      <button class="account-button" id="open-login" type="button" disabled>Iniciar sesión</button>
+      <div id="account-panel" class="account-panel" hidden><span id="account-name"></span><button id="logout" class="text-button" type="button">Cerrar sesión</button></div>
+    </nav>
   </header>
+  <p class="account-notice wrap" id="account-notice" role="status" aria-live="polite" hidden></p>
   <main class="wrap">
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-copy"><p class="eyebrow"><span></span> ENCUENTRA TU FRAGANCIA</p>
@@ -50,5 +57,24 @@
   </main>
   <footer class="site-footer wrap"><span>Una fragancia, muchas historias.</span><p>Proyecto académico TSP. Productos de demostración e imágenes ilustrativas. Precios en COP.</p></footer>
   <dialog id="product-dialog" aria-labelledby="detail-name"><div class="dialog-top"><span>CONOCE TU FRAGANCIA</span><button class="close-button" id="close-detail" type="button" aria-label="Cerrar detalle">✕</button></div><div class="detail-layout"><div class="detail-art" id="detail-art"><img id="detail-image" src="/static/perfume.svg" alt=""></div><div class="detail-copy"><p id="detail-brand" class="eyebrow"></p><h2 id="detail-name"></h2><p id="detail-description"></p><p id="detail-price" class="detail-price"></p><dl id="detail-attributes"></dl><p class="image-note">Imagen ilustrativa cuando no hay fotografía del producto.</p></div></div></dialog>
+  <dialog id="login-dialog" aria-labelledby="login-title" aria-describedby="login-description">
+    <div class="dialog-top"><span>TU CUENTA</span><button class="close-button" id="close-login" type="button" aria-label="Cerrar inicio de sesión">✕</button></div>
+    <div class="login-layout">
+      <div class="login-art" aria-hidden="true"><span class="eyebrow">TU PRÓXIMA ESENCIA</span><img src="/static/perfume.svg" alt=""><p>Un aroma para<br>cada momento.</p></div>
+      <div class="login-copy">
+        <p class="eyebrow">QUÉ BUENO VERTE</p><h2 id="login-title">Bienvenido de nuevo</h2>
+        <p id="login-description">Entra con el correo y la contraseña de tu cuenta.</p>
+        <form id="login-form" aria-busy="false">
+          <label for="login-email">Correo electrónico</label>
+          <input id="login-email" name="email" type="email" autocomplete="username" maxlength="254" placeholder="tu@correo.com" required>
+          <label for="login-password">Contraseña</label>
+          <div class="password-field"><input id="login-password" name="password" type="password" autocomplete="current-password" maxlength="128" required><button id="toggle-password" type="button" aria-label="Mostrar contraseña" aria-pressed="false">Mostrar</button></div>
+          <p id="login-error" class="login-error" role="alert" hidden></p>
+          <button id="submit-login" class="primary-button login-submit" type="submit">Entrar a mi cuenta</button>
+        </form>
+        <p class="login-help">¿Aún no tienes cuenta? El registro estará disponible cuando integremos ese módulo.</p>
+      </div>
+    </div>
+  </dialog>
 </body>
 </html>

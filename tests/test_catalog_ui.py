@@ -26,7 +26,8 @@ def request(path, params=None):
 class CatalogIntegrationTests(unittest.TestCase):
     def test_catalog_page_and_assets_are_served(self):
         for path, mime in [("/", "text/html"), ("/static/catalog.css", "text/css"),
-                           ("/static/catalog.js", "text/javascript"), ("/static/perfume.svg", "image/svg+xml")]:
+                           ("/static/catalog.js", "text/javascript"), ("/static/perfume.svg", "image/svg+xml"),
+                           ("/static/auth.js", "text/javascript"), ("/static/auth.css", "text/css")]:
             with self.subTest(path=path):
                 response = request(path)
                 self.assertEqual(response["status"], "200 OK")

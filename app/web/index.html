@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f1e9">
+  <title>Catálogo de perfumes</title>
+  <link rel="stylesheet" href="/static/catalog.css">
+  <script defer src="/static/catalog.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#collection">Ir al catálogo</a>
+  <header class="site-header wrap">
+    <a class="brand" href="/" aria-label="Catálogo de perfumes, inicio"><span class="brand-mark" aria-hidden="true">p.</span><span>perfumes<span class="brand-caption">CATÁLOGO VIRTUAL</span></span></a>
+    <a class="collection-link" href="#collection">Explorar colección <span aria-hidden="true">↗</span></a>
+  </header>
+  <main class="wrap">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy"><p class="eyebrow"><span></span> ENCUENTRA TU FRAGANCIA</p>
+        <h1 id="hero-title">Un aroma para<br><em>cada momento.</em></h1>
+        <p class="hero-description">Explora notas, descubre nuevas combinaciones y encuentra el perfume que va contigo.</p>
+        <a class="hero-link" href="#collection">Descubrir perfumes <span aria-hidden="true">↓</span></a>
+      </div>
+      <div class="hero-art" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="hero-bottle"><img src="/static/perfume.svg" alt=""></div><span class="art-note note-one">Floral &amp; fresco</span><span class="art-note note-two">Tu próxima esencia</span></div>
+    </section>
+    <section id="collection" aria-labelledby="collection-title">
+      <div class="collection-heading"><div><p class="eyebrow">LA COLECCIÓN</p><h2 id="collection-title">Descubre tu favorito</h2></div><p id="result-count" role="status" aria-live="polite">Cargando perfumes…</p></div>
+      <div class="catalog-layout">
+        <details class="filters" id="filter-panel" open>
+          <summary>Filtrar perfumes <span aria-hidden="true">＋</span></summary>
+          <form id="filters-form">
+            <div class="filter-top"><span>Personaliza tu búsqueda</span><button type="button" class="text-button" id="clear-filters">Limpiar</button></div>
+            <label for="brand">Marca</label><select id="brand" name="brand"><option value="">Todas las marcas</option></select>
+            <label for="gender">Género</label><select id="gender" name="gender"><option value="">Todos</option></select>
+            <label for="family">Familia olfativa</label><select id="family" name="family"><option value="">Todas las familias</option></select>
+            <label for="presentation_ml">Presentación</label><select id="presentation_ml" name="presentation_ml"><option value="">Todas las presentaciones</option></select>
+            <fieldset><legend>Precio en pesos colombianos</legend><div class="price-fields"><div><label for="min_price">Desde</label><input id="min_price" name="min_price" type="number" min="0" step="any" inputmode="decimal" placeholder="0"></div><div><label for="max_price">Hasta</label><input id="max_price" name="max_price" type="number" min="0" step="any" inputmode="decimal" placeholder="Sin límite"></div></div></fieldset>
+            <label class="check-label" for="in_stock"><input id="in_stock" name="in_stock" type="checkbox">Solo disponibles</label>
+          </form>
+        </details>
+        <div class="catalog-content">
+          <form id="search-form" role="search"><label class="sr-only" for="search">Buscar perfume por nombre</label><div class="search-box"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="m16 16 4.5 4.5"></path></svg><input type="search" name="q" id="search" maxlength="160" placeholder="Busca un perfume por su nombre" autocomplete="off"><button type="submit">Buscar</button></div></form>
+          <div id="message" class="message" role="alert" hidden></div>
+          <div id="product-grid" class="product-grid" aria-busy="true"></div>
+          <div id="empty-state" class="empty-state" hidden><span aria-hidden="true">✧</span><h3>No encontramos perfumes</h3><p>Prueba con otro nombre o cambia los filtros.</p><button type="button" id="reset-search" class="primary-button">Ver toda la colección</button></div>
+          <noscript><p>Activa JavaScript en tu navegador para consultar y filtrar el catálogo.</p></noscript>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer wrap"><span>Una fragancia, muchas historias.</span><p>Proyecto académico TSP. Productos de demostración e imágenes ilustrativas. Precios en COP.</p></footer>
+  <dialog id="product-dialog" aria-labelledby="detail-name"><div class="dialog-top"><span>CONOCE TU FRAGANCIA</span><button class="close-button" id="close-detail" type="button" aria-label="Cerrar detalle">✕</button></div><div class="detail-layout"><div class="detail-art" id="detail-art"><img id="detail-image" src="/static/perfume.svg" alt=""></div><div class="detail-copy"><p id="detail-brand" class="eyebrow"></p><h2 id="detail-name"></h2><p id="detail-description"></p><p id="detail-price" class="detail-price"></p><dl id="detail-attributes"></dl><p class="image-note">Imagen ilustrativa cuando no hay fotografía del producto.</p></div></div></dialog>
+</body>
+</html>

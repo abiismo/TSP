@@ -2,6 +2,7 @@
 
 import json
 from http import HTTPStatus
+from pathlib import Path
 from urllib.parse import parse_qs
 from wsgiref.simple_server import make_server
 
@@ -11,10 +12,22 @@ from app.search import CatalogSearch
 
 
 search_service = CatalogSearch(SAMPLE_CATALOG)
+WEB_ROOT = Path(__file__).with_name("web")
+WEB_FILES = {
+    "/": ("index.html", "text/html; charset=utf-8"),
+    "/static/catalog.css": ("catalog.css", "text/css; charset=utf-8"),
+    "/static/catalog.js": ("catalog.js", "text/javascript; charset=utf-8"),
+    "/static/perfume.svg": ("perfume.svg", "image/svg+xml"),
+}
 
 
 def application(environ: dict, start_response):
     path = environ.get("PATH_INFO", "/")
+    if path in WEB_FILES:
+        filename, content_type = WEB_FILES[path]
+        body = (WEB_ROOT / filename).read_bytes()
+        start_response("200 OK", [("Content-Type", content_type), ("Content-Length", str(len(body)))])
+        return [body]
     params = parse_qs(environ.get("QUERY_STRING", ""), keep_blank_values=True)
     query = {key: values[-1] for key, values in params.items()}
     status = HTTPStatus.OK

@@ -2,19 +2,45 @@
 
 import json
 from http import HTTPStatus
+from pathlib import Path
 from urllib.parse import parse_qs
 from wsgiref.simple_server import make_server
 
 from app.api.routes import advanced_search, basic_search
+from app.api.auth_routes import auth_response
+from app.auth import AuthStore
 from app.catalog import SAMPLE_CATALOG
 from app.search import CatalogSearch
 
 
 search_service = CatalogSearch(SAMPLE_CATALOG)
+auth_store = AuthStore()
+WEB_ROOT = Path(__file__).with_name("web")
+WEB_FILES = {
+    "/": ("index.html", "text/html; charset=utf-8"),
+    "/static/catalog.css": ("catalog.css", "text/css; charset=utf-8"),
+    "/static/catalog.js": ("catalog.js", "text/javascript; charset=utf-8"),
+    "/static/perfume.svg": ("perfume.svg", "image/svg+xml"),
+    "/static/auth.css": ("auth.css", "text/css; charset=utf-8"),
+    "/static/auth.js": ("auth.js", "text/javascript; charset=utf-8"),
+}
 
 
 def application(environ: dict, start_response):
     path = environ.get("PATH_INFO", "/")
+    if path.startswith("/api/auth/"):
+        code, result, headers = auth_response(environ, auth_store)
+        status = HTTPStatus(code)
+        body = json.dumps(result, ensure_ascii=False).encode("utf-8")
+        start_response(f"{status.value} {status.phrase}", headers + [
+            ("Content-Type", "application/json; charset=utf-8"), ("Content-Length", str(len(body))),
+        ])
+        return [body]
+    if path in WEB_FILES:
+        filename, content_type = WEB_FILES[path]
+        body = (WEB_ROOT / filename).read_bytes()
+        start_response("200 OK", [("Content-Type", content_type), ("Content-Length", str(len(body)))])
+        return [body]
     params = parse_qs(environ.get("QUERY_STRING", ""), keep_blank_values=True)
     query = {key: values[-1] for key, values in params.items()}
     status = HTTPStatus.OK
